@@ -3,17 +3,13 @@ import { DomainEvents } from "../events/domain-events";
 import { EntityBase } from "./entity-base";
 import { UniqueEntityID } from "./unique-entity-id";
 
-export abstract class AggregateRoot<
-	PROPS,
-	ID extends UniqueEntityID<string | number>,
-> extends EntityBase<PROPS, ID> {
-	private _domainEvents: DomainEvent<ID>[] = [];
-
-	get domainEvents(): DomainEvent<ID>[] {
+export abstract class AggregateRoot<PROPS> extends EntityBase<PROPS> {
+	private _domainEvents: DomainEvent<UniqueEntityID>[] = [];
+	get domainEvents(): DomainEvent<UniqueEntityID>[] {
 		return this._domainEvents;
 	}
 
-	protected addDomainEvent(domainEvent: DomainEvent<ID>): void {
+	protected addDomainEvent(domainEvent: DomainEvent<UniqueEntityID>): void {
 		this._domainEvents.push(domainEvent);
 		DomainEvents.markAggregateForDispatch(this);
 	}

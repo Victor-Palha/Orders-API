@@ -24,7 +24,8 @@
         "noStaticOnlyClass": "off",
         "noThisInStatic": "off",
         "useLiteralKeys": "off",
-        "noUselessConstructor": "off"
+        "noUselessConstructor": "off",
+        "useOptionalChain": "off"
       },
       "suspicious": {
         "noExplicitAny": "off",

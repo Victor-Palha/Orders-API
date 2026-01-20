@@ -1,15 +1,15 @@
-export abstract class UniqueEntityID<T = string | number> {
-	protected value: T;
+export class UniqueEntityID {
+	protected value: string;
 
 	public toValue() {
 		return this.value;
 	}
 
-	public constructor(value?: T) {
+	public constructor(value?: string) {
 		this.value = value;
 	}
 
-	public equals(id: UniqueEntityID<T>): boolean {
+	public equals(id: UniqueEntityID): boolean {
 		return this.value === id.value;
 	}
 }

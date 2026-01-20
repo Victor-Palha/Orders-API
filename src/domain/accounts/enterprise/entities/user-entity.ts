@@ -8,8 +8,8 @@ export type UserProps = {
 	email: Email;
 	password: Password;
 	passwordHash?: string;
-	createdAt: Date;
-	updatedAt: Date;
+	createdAt?: Date;
+	updatedAt?: Date;
 };
 
 export class UserEntity extends EntityBase<UserProps> {

@@ -1,5 +1,6 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
+import { DatabaseModule } from "./infra/configs/database/database.module";
 import { envSchema } from "./infra/configs/env";
 import { EnvModule } from "./infra/configs/env/env.module";
 
@@ -10,6 +11,7 @@ import { EnvModule } from "./infra/configs/env/env.module";
 			isGlobal: true,
 		}),
 		EnvModule,
+		DatabaseModule,
 	],
 })
 export class AppModule {}

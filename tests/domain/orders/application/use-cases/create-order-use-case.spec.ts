@@ -44,7 +44,6 @@ describe("Create Order Use Case", () => {
 		];
 
 		const result = await sut.execute({
-			name: "Test Order",
 			userId: user.id.toValue(),
 			items,
 		});
@@ -81,7 +80,6 @@ describe("Create Order Use Case", () => {
 		];
 
 		const result = await sut.execute({
-			name: "Order with invalid user",
 			userId: "non-existing-user-id",
 			items,
 		});
@@ -111,7 +109,6 @@ describe("Create Order Use Case", () => {
 		];
 
 		const result = await sut.execute({
-			name: "Order with calculated total",
 			userId: user.id.toValue(),
 			items,
 		});
@@ -136,7 +133,6 @@ describe("Create Order Use Case", () => {
 		];
 
 		const result = await sut.execute({
-			name: "Pending Order",
 			userId: user.id.toValue(),
 			items,
 		});
@@ -161,7 +157,6 @@ describe("Create Order Use Case", () => {
 		];
 
 		const result = await sut.execute({
-			name: "Order with timestamps",
 			userId: user.id.toValue(),
 			items,
 		});

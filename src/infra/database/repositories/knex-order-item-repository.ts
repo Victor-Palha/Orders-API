@@ -20,6 +20,16 @@ export class KnexOrderItemRepository implements OrderItemRepository {
 		return OrderItemMapper.toEntity(row);
 	}
 
+	async findByOrderIds(orderIds: string[]): Promise<OrderItemEntity[]> {
+		if (orderIds.length === 0) {
+			return [];
+		}
+
+		const rows = await this.knex.table<OrderItemRow>(this.tableName).whereIn("order_id", orderIds);
+
+		return rows.map(row => OrderItemMapper.toEntity(row));
+	}
+
 	async findByOrderId(orderId: string): Promise<OrderItemEntity[]> {
 		const rows = await this.knex.table<OrderItemRow>(this.tableName).where({ order_id: orderId });
 

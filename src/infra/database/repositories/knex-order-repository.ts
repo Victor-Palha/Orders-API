@@ -74,33 +74,39 @@ export class KnexOrderRepository implements OrderRepository {
 			sortOrder = "DESC",
 		} = params;
 
+		const sanitizedLimit = Math.min(Math.max(limit, 1), 100);
 		let query = this.knex.table<OrderRow>(this.tableName).where({ user_id: userId });
 
 		if (status) {
 			query = query.where({ status });
 		}
 
-		const total = await query.clone().count("* as count").first();
-		const totalCount = Number(total) || 0;
+		const result = (await query.clone().count("* as count").first()) as
+			| { count: string | number | bigint }
+			| undefined;
+		const totalCount = result ? Number(result.count) : 0;
 
 		const rows = await query
 			.orderBy(sortBy, sortOrder)
-			.limit(limit)
-			.offset((page - 1) * limit);
+			.limit(sanitizedLimit)
+			.offset((page - 1) * sanitizedLimit);
 
-		const orders = rows.map(row => OrderMapper.toEntity(row));
+		const orderIds = rows.map(row => row.id);
+		const allItems =
+			orderIds.length > 0 ? await this.orderItemRepository.findByOrderIds(orderIds) : [];
 
-		for (const order of orders) {
-			const items = await this.orderItemRepository.findByOrderId(order.id.toValue());
-			order.items = items;
-		}
+		const orders = rows.map(row => {
+			const order = OrderMapper.toEntity(row);
+			order.items = allItems.filter(item => item.props.orderId.toValue() === order.id.toValue());
+			return order;
+		});
 
 		return {
 			orders,
 			total: totalCount,
 			page,
-			limit,
-			totalPages: Math.ceil(totalCount / limit),
+			limit: sanitizedLimit,
+			totalPages: Math.ceil(totalCount / sanitizedLimit),
 		};
 	}
 }

@@ -17,7 +17,7 @@ export class AuthenticateBodyDto implements AuthenticateBodySchema {
 
 	@ApiProperty({
 		description: "Senha do usuário",
-		example: "Senha@123",
+		example: "senha@Segura123",
 	})
 	password: string;
 }

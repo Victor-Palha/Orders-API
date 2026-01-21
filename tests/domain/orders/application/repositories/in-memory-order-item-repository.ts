@@ -13,6 +13,10 @@ export class InMemoryOrderItemRepository implements OrderItemRepository {
 		return this.orderItems.filter(item => item.props.orderId.toValue() === orderId);
 	}
 
+	async findByOrderIds(orderIds: string[]): Promise<OrderItemEntity[]> {
+		return this.orderItems.filter(item => orderIds.includes(item.props.orderId.toValue()));
+	}
+
 	async create(orderItem: OrderItemEntity): Promise<void> {
 		this.orderItems.push(orderItem);
 	}

@@ -3,11 +3,11 @@ import { Either, failure, success } from "@/core/either";
 import { UniqueEntityID } from "@/core/entities/unique-entity-id";
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error";
 import { UserRepository } from "@/domain/accounts/application/repositories/user-repository";
-import { InMemoryOrderItemRepository } from "@/domain/orders/application/repositories/in-memory-order-item-repository";
 import { StatusEnum } from "../../enterprise/enums/status.enum";
 import { OrderEntity } from "../../enterprise/order-entity";
 import { OrderItemEntity } from "../../enterprise/order-item-entity";
 import { Status } from "../../enterprise/value-object/status";
+import { OrderItemRepository } from "../repositories/order-item-repository";
 import { OrderRepository } from "../repositories/order-repository";
 import { InvalidStatusError } from "./errors/invalid-status-error";
 
@@ -19,7 +19,6 @@ export interface OrderItemInput {
 }
 
 interface CreateOrderUseCaseRequest {
-	name: string;
 	userId: string;
 	items: OrderItemInput[];
 }
@@ -36,11 +35,10 @@ export class CreateOrderUseCase {
 	constructor(
 		private orderRepository: OrderRepository,
 		private userRepository: UserRepository,
-		private orderItemRepository: InMemoryOrderItemRepository
+		private orderItemRepository: OrderItemRepository
 	) {}
 
 	public async execute({
-		name,
 		userId,
 		items,
 	}: CreateOrderUseCaseRequest): Promise<CreateOrderUseCaseResponse> {
@@ -58,7 +56,7 @@ export class CreateOrderUseCase {
 			return failure(status.value);
 		}
 		const order = OrderEntity.create({
-			name,
+			name: `Pedido de ${userExists.props.name}`,
 			userId: new UniqueEntityID(userId),
 			status: status.value,
 			totalAmount,
@@ -79,6 +77,7 @@ export class CreateOrderUseCase {
 		});
 
 		await this.orderItemRepository.createMany(orderItems);
+		order.items = orderItems;
 
 		return success({
 			order,

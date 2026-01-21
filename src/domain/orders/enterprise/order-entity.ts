@@ -2,6 +2,7 @@ import { AggregateRoot } from "@/core/entities/aggregate-root";
 import { UniqueEntityID } from "@/core/entities/unique-entity-id";
 import { Optional } from "@/core/types/optional";
 import { OrderCreatedEvent } from "./events/order-created-event";
+import { OrderItemEntity } from "./order-item-entity";
 import { Status } from "./value-object/status";
 
 export type OrderProps = {
@@ -12,10 +13,11 @@ export type OrderProps = {
 	createdAt: Date;
 	updatedAt: Date;
 	processedAt?: Date;
+	items?: OrderItemEntity[];
 };
 
 export class OrderEntity extends AggregateRoot<OrderProps> {
-	static create(props: Optional<OrderProps, "createdAt" | "updatedAt">, id?: string) {
+	static create(props: Optional<OrderProps, "createdAt" | "updatedAt" | "items">, id?: string) {
 		const order = new OrderEntity(
 			{
 				...props,
@@ -32,5 +34,9 @@ export class OrderEntity extends AggregateRoot<OrderProps> {
 		}
 
 		return order;
+	}
+
+	public set items(items: OrderItemEntity[]) {
+		this._props.items = items;
 	}
 }

@@ -6,8 +6,6 @@ import { EnvService } from "../env/env.service";
 
 const jwtPayload = z.object({
 	sub: z.uuid(),
-	role: z.string(),
-	company_id: z.string(),
 });
 
 export type JwtPayload = z.infer<typeof jwtPayload>;

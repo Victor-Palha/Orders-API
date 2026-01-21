@@ -6,7 +6,7 @@ export interface UserRow {
 	id: string;
 	name: string;
 	email: string;
-	password_hash: string;
+	password: string;
 	created_at: Date;
 	updated_at: Date;
 }
@@ -17,8 +17,8 @@ export abstract class UserMapper {
 			{
 				name: row.name,
 				email: Email.create(row.email),
-				password: Password.create(""), // Empty password since we only store hash
-				passwordHash: row.password_hash,
+				password: Password.create(""),
+				passwordHash: row.password,
 				createdAt: row.created_at,
 				updatedAt: row.updated_at,
 			},
@@ -31,7 +31,7 @@ export abstract class UserMapper {
 			id: user.id.toValue(),
 			name: user.props.name,
 			email: user.props.email.value,
-			password_hash: user.props.passwordHash ?? user.props.password.value,
+			password: user.props.passwordHash ?? user.props.password.value,
 			created_at: user.props.createdAt ?? new Date(),
 			updated_at: user.props.updatedAt ?? new Date(),
 		};

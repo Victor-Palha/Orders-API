@@ -31,7 +31,8 @@ export class KnexUserRepository implements UserRepository {
 	}
 
 	async create(user: UserEntity): Promise<void> {
-		await this.knex.table(this.tableName).insert(UserMapper.toRow(user));
+		const userMapped = UserMapper.toRow(user);
+		await this.knex.table(this.tableName).insert(userMapped);
 	}
 
 	async update(user: UserEntity): Promise<void> {

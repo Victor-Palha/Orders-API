@@ -11,14 +11,14 @@ import { UserPresenter } from "./presenters/user-presenter";
 import { UserResponseScalar } from "./presenters/user-reponse-scalar";
 
 @ApiTags("Accounts")
-@Controller("accounts")
+@Controller("/auth")
 @Public()
 export class CreateUserController {
 	private readonly logger = new Logger(CreateUserController.name);
 
 	constructor(private readonly createUserUseCase: CreateUserUseCase) {}
 
-	@Post("/users")
+	@Post("/register")
 	@ApiOperation({ summary: "Cria um novo usuário" })
 	@ApiResponse({
 		status: HttpStatus.CREATED,

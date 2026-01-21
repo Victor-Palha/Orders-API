@@ -10,13 +10,13 @@ import { UserPresenter } from "./presenters/user-presenter";
 import { UserResponseScalar } from "./presenters/user-reponse-scalar";
 
 @ApiTags("Accounts")
-@Controller("accounts")
+@Controller("/auth")
 export class UserProfileController {
 	private readonly logger = new Logger(UserProfileController.name);
 
 	constructor(private readonly findUserByIdUseCase: FindUserByIdUseCase) {}
 
-	@Get("/profile")
+	@Get("/me")
 	@ApiOperation({ summary: "Retorna o perfil do usuário logado" })
 	@ApiResponse({
 		status: HttpStatus.OK,

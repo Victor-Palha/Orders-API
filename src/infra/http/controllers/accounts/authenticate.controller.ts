@@ -11,14 +11,14 @@ import { AuthResponseScalar } from "./presenters/auth-response-scalar";
 import { UserPresenter } from "./presenters/user-presenter";
 
 @ApiTags("Accounts")
-@Controller("accounts")
+@Controller("/auth")
 @Public()
 export class AuthenticateController {
 	private readonly logger = new Logger(AuthenticateController.name);
 
 	constructor(private readonly authenticateUserUseCase: AuthenticateUserUseCase) {}
 
-	@Post("/auth")
+	@Post("/login")
 	@ApiOperation({ summary: "Autentica um usuário e retorna o token JWT" })
 	@ApiResponse({
 		status: HttpStatus.OK,

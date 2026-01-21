@@ -1,4 +1,4 @@
-export interface DomainEvent<ID> {
+export interface DomainEvent {
 	occurredAt: Date;
-	getAggregateId(): ID;
+	getAggregateId(): string;
 }

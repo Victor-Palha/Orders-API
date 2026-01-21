@@ -10,7 +10,7 @@ async function bootstrap() {
 
 	const envService = app.get(EnvService);
 	const port = envService.get("PORT");
-	const nodeEnv = envService.get("NODE_ENV");
+	// const nodeEnv = envService.get("NODE_ENV");
 
 	app.enableCors({
 		origin: "*",
@@ -20,9 +20,7 @@ async function bootstrap() {
 		exposedHeaders: ["set-cookie"],
 	});
 
-	if (nodeEnv !== "production") {
-		createOpenAPIDocument(app);
-	}
+	createOpenAPIDocument(app);
 
 	await app.listen(port);
 }

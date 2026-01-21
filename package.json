@@ -24,7 +24,7 @@
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "pnpm db:deploy && prisma db seed && node dist/main",
+    "start:prod": "pnpm migrate:latest && node dist/main",
     "test": "vitest run",
     "lint": "biome check --write",
     "test:watch": "vitest",
@@ -32,10 +32,10 @@
     "test:debug": "vitest --inspect-brk --inspect --logHeapUsage --threads=false",
     "test:e2e": "vitest run --config ./vitest.config.e2e.ts",
     "test:unit": "vitest run --config ./vitest.config.ts",
-    "migrate:make": "knex migrate:make --knexfile knexfile.ts -x ts",
-    "migrate:latest": "knex migrate:latest --knexfile knexfile.ts",
-    "migrate:rollback": "knex migrate:rollback --knexfile knexfile.ts",
-    "migrate:status": "knex migrate:status --knexfile knexfile.ts"
+    "migrate:make": "knex migrate:make --knexfile knexfile.js -x ts",
+    "migrate:latest": "knex migrate:latest --knexfile knexfile.js",
+    "migrate:rollback": "knex migrate:rollback --knexfile knexfile.js",
+    "migrate:status": "knex migrate:status --knexfile knexfile.js"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",

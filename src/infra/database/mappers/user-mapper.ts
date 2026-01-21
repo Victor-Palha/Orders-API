@@ -17,7 +17,7 @@ export abstract class UserMapper {
 			{
 				name: row.name,
 				email: Email.create(row.email),
-				password: Password.create(""),
+				password: Password.create(row.password),
 				passwordHash: row.password,
 				createdAt: row.created_at,
 				updatedAt: row.updated_at,

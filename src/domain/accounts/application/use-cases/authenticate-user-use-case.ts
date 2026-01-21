@@ -1,3 +1,4 @@
+import { Injectable } from "@nestjs/common";
 import { Either, failure, success } from "@/core/either";
 import { UserEntity } from "../../enterprise/entities/user-entity";
 import { Encrypter } from "../cryptography/encrypter";
@@ -17,6 +18,8 @@ type AuthenticateUserUseCaseResponse = Either<
 		token: string;
 	}
 >;
+
+@Injectable()
 export class AuthenticateUserUseCase {
 	private readonly userRepository: UserRepository;
 	private readonly hasher: Hasher;

@@ -1,3 +1,4 @@
+import { Injectable } from "@nestjs/common";
 import { Either, failure, success } from "@/core/either";
 import { ResourceAlreadyExistsError } from "@/core/errors/resource-already-exists-error";
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error";
@@ -19,6 +20,7 @@ type UpdateUserUseCaseResponse = Either<
 	}
 >;
 
+@Injectable()
 export class UpdateUserUseCase {
 	private readonly userRepository: UserRepository;
 

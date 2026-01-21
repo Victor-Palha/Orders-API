@@ -1,3 +1,4 @@
+import { Injectable } from "@nestjs/common";
 import { Either, failure, success } from "@/core/either";
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error";
 import { UserEntity } from "../../enterprise/entities/user-entity";
@@ -14,6 +15,7 @@ type FindUserByIdUseCaseResponse = Either<
 	}
 >;
 
+@Injectable()
 export class FindUserByIdUseCase {
 	private readonly userRepository: UserRepository;
 

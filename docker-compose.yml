@@ -22,7 +22,7 @@ services:
       - ordernet
 
   api:
-    build: .
+    build: ./API
     container_name: orders-api
     env_file:
       - .env

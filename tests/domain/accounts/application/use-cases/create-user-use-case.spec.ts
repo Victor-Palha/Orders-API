@@ -60,7 +60,7 @@ describe("Create User Use Case", () => {
 				value: data.email,
 			},
 		});
-		expect(result.value.user.props.passwordHash).toBe("S0me@Pass123-hasher");
+		expect(result.value.user.props.passwordHash).toBe("S0me@Pass123-hashed");
 		expect(result.value.user.id.toValue()).toBeDefined();
 	});
 });

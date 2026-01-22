@@ -12,6 +12,12 @@ export const envSchema = z.object({
 	JWT_PRIVATE_KEY: z.string().min(1, "JWT secret is required!"),
 	JWT_PUBLIC_KEY: z.string().min(1, "JWT public key is required!"),
 	NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
+	AWS_REGION: z.string().default("us-east-1"),
+	AWS_ACCESS_KEY_ID: z.string(),
+	AWS_SECRET_ACCESS_KEY: z.string(),
+	AWS_ENDPOINT_URL: z.string().optional(),
+	SQS_ORDERS_QUEUE_URL: z.string(),
+	SQS_ORDERS_OUTPUT_QUEUE_URL: z.string(),
 });
 
 export type Env = z.infer<typeof envSchema>;

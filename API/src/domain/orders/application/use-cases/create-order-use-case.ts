@@ -36,7 +36,7 @@ export class CreateOrderUseCase {
 		private orderRepository: OrderRepository,
 		private userRepository: UserRepository,
 		private orderItemRepository: OrderItemRepository
-	) {}
+	) { }
 
 	public async execute({
 		userId,

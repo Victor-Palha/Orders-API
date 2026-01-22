@@ -9,6 +9,7 @@ import { ListOrdersUseCase } from "@/domain/orders/application/use-cases/list-or
 import { AuthModule } from "../configs/auth/auth.module";
 import { CryptographyModule } from "../configs/cryptography/cryptography.module";
 import { EnvModule } from "../configs/env/env.module";
+import { SqsModule } from "../configs/sqs/sqs.module";
 import { DatabaseModule } from "../database/database.module";
 import { AuthenticateController } from "./controllers/accounts/authenticate.controller";
 import { CreateUserController } from "./controllers/accounts/create-user.controller";
@@ -19,7 +20,7 @@ import { ListOrdersController } from "./controllers/orders/list-orders.controlle
 import { EitherInterceptor } from "./interceptors/either-interceptor";
 
 @Module({
-	imports: [EnvModule, CryptographyModule, DatabaseModule, AuthModule],
+	imports: [EnvModule, CryptographyModule, DatabaseModule, AuthModule, SqsModule],
 	providers: [
 		{
 			provide: APP_INTERCEPTOR,
@@ -41,4 +42,4 @@ import { EitherInterceptor } from "./interceptors/either-interceptor";
 		ListOrdersController,
 	],
 })
-export class HttpModule {}
+export class HttpModule { }

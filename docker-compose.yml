@@ -59,8 +59,9 @@ services:
       - AWS_REGION=us-east-1
       - AWS_ACCESS_KEY_ID=test
       - AWS_SECRET_ACCESS_KEY=test
-      - SQS_ENDPOINT=http://localstack:4566
+      - AWS_ENDPOINT_URL=http://localstack:4566
       - SQS_ORDERS_QUEUE_URL=http://localstack:4566/000000000000/orders-input
+      - SQS_ORDERS_OUTPUT_QUEUE_URL=http://localstack:4566/000000000000/orders-output
     ports:
       - "3333:3333"
     depends_on:

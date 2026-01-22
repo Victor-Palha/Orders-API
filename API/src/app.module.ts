@@ -4,8 +4,10 @@ import { AuthModule } from "./infra/configs/auth/auth.module";
 import { CryptographyModule } from "./infra/configs/cryptography/cryptography.module";
 import { envSchema } from "./infra/configs/env";
 import { EnvModule } from "./infra/configs/env/env.module";
+import { SqsModule } from "./infra/configs/sqs/sqs.module";
 import { DatabaseModule } from "./infra/database/database.module";
 import { HttpModule } from "./infra/http/http.module";
+import { EventsModule } from "./infra/events/events.module";
 
 @Module({
 	imports: [
@@ -18,6 +20,8 @@ import { HttpModule } from "./infra/http/http.module";
 		EnvModule,
 		CryptographyModule,
 		AuthModule,
+		SqsModule,
+		EventsModule
 	],
 })
-export class AppModule {}
+export class AppModule { }

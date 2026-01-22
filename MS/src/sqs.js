@@ -11,7 +11,6 @@ const clientConfig = {
   }
 };
 
-// Add endpoint for LocalStack
 if (process.env.AWS_ENDPOINT_URL) {
   clientConfig.endpoint = process.env.AWS_ENDPOINT_URL;
 }
@@ -30,7 +29,7 @@ export async function receiveMessages() {
     const response = await sqsClient.send(command);
     return response.Messages || [];
   } catch (error) {
-    console.error('❌ Error receiving messages from SQS:', error);
+    console.error('Error receiving messages from SQS:', error);
     return [];
   }
 }
@@ -43,9 +42,9 @@ export async function deleteMessage(receiptHandle) {
 
   try {
     await sqsClient.send(command);
-    console.log('✅ Message deleted from queue');
+    console.log('Message deleted from queue');
   } catch (error) {
-    console.error('❌ Error deleting message from SQS:', error);
+    console.error('Error deleting message from SQS:', error);
     throw error;
   }
 }
@@ -62,9 +61,9 @@ export async function sendProcessedMessage(orderId) {
 
   try {
     await sqsClient.send(command);
-    console.log(`✅ Processed message sent to output queue for order ${orderId}`);
+    console.log(`Processed message sent to output queue for order ${orderId}`);
   } catch (error) {
-    console.error(`❌ Error sending message to output queue for order ${orderId}:`, error);
+    console.error(`Error sending message to output queue for order ${orderId}:`, error);
     throw error;
   }
 }

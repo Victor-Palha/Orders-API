@@ -8,6 +8,7 @@ import { OrderEntity } from "@/domain/orders/enterprise/order-entity";
 import { KnexService } from "../knex/knex.service";
 import { OrderMapper, type OrderRow } from "../mappers/order-mapper";
 import { KnexOrderItemRepository } from "./knex-order-item-repository";
+import { DomainEvents } from "@/core/events/domain-events";
 
 @Injectable()
 export class KnexOrderRepository implements OrderRepository {
@@ -16,7 +17,7 @@ export class KnexOrderRepository implements OrderRepository {
 	constructor(
 		private knex: KnexService,
 		private orderItemRepository: KnexOrderItemRepository
-	) {}
+	) { }
 
 	async findById(id: string): Promise<OrderEntity | null> {
 		const row = await this.knex.table<OrderRow>(this.tableName).where({ id }).first();
@@ -51,6 +52,7 @@ export class KnexOrderRepository implements OrderRepository {
 
 	async create(order: OrderEntity): Promise<void> {
 		await this.knex.table(this.tableName).insert(OrderMapper.toRow(order));
+		DomainEvents.dispatchEventsForAggregate(order.id);
 	}
 
 	async update(order: OrderEntity): Promise<void> {

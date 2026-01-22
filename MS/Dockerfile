@@ -2,9 +2,11 @@ FROM node:24.7-alpine3.21
 
 WORKDIR /usr/src/app
 
+RUN npm i -g pnpm
+
 COPY package.json ./
 
-RUN npm install
+RUN pnpm install
 
 COPY . .
 

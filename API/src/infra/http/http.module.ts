@@ -18,6 +18,8 @@ import { CreateOrderController } from "./controllers/orders/create-order.control
 import { FindOrderByIdController } from "./controllers/orders/find-order-by-id.controller";
 import { ListOrdersController } from "./controllers/orders/list-orders.controller";
 import { EitherInterceptor } from "./interceptors/either-interceptor";
+import { FetchAllOrdersController } from "./controllers/orders/fetch-all-orders.controller";
+import { FetchAllOrdersUseCase } from "@/domain/orders/application/use-cases/fetch-all-orders-use-case";
 
 @Module({
 	imports: [EnvModule, CryptographyModule, DatabaseModule, AuthModule, SqsModule],
@@ -32,12 +34,14 @@ import { EitherInterceptor } from "./interceptors/either-interceptor";
 		CreateOrderUseCase,
 		FindOrderByIdUseCase,
 		ListOrdersUseCase,
+		FetchAllOrdersUseCase
 	],
 	controllers: [
 		CreateUserController,
 		AuthenticateController,
 		UserProfileController,
 		CreateOrderController,
+		FetchAllOrdersController,
 		FindOrderByIdController,
 		ListOrdersController,
 	],

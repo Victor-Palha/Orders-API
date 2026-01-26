@@ -2,6 +2,8 @@ import { Injectable } from "@nestjs/common";
 import {
 	type ListOrdersParams,
 	type ListOrdersResult,
+	type ListAllOrdersParams,
+	type ListAllOrdersResult,
 	OrderRepository,
 } from "@/domain/orders/application/repositories/order-repository";
 import { OrderEntity } from "@/domain/orders/enterprise/order-entity";
@@ -78,6 +80,51 @@ export class KnexOrderRepository implements OrderRepository {
 
 		const sanitizedLimit = Math.min(Math.max(limit, 1), 100);
 		let query = this.knex.table<OrderRow>(this.tableName).where({ user_id: userId });
+
+		if (status) {
+			query = query.where({ status });
+		}
+
+		const result = (await query.clone().count("* as count").first()) as
+			| { count: string | number | bigint }
+			| undefined;
+		const totalCount = result ? Number(result.count) : 0;
+
+		const rows = await query
+			.orderBy(sortBy, sortOrder)
+			.limit(sanitizedLimit)
+			.offset((page - 1) * sanitizedLimit);
+
+		const orderIds = rows.map(row => row.id);
+		const allItems =
+			orderIds.length > 0 ? await this.orderItemRepository.findByOrderIds(orderIds) : [];
+
+		const orders = rows.map(row => {
+			const order = OrderMapper.toEntity(row);
+			order.items = allItems.filter(item => item.props.orderId.toValue() === order.id.toValue());
+			return order;
+		});
+
+		return {
+			orders,
+			total: totalCount,
+			page,
+			limit: sanitizedLimit,
+			totalPages: Math.ceil(totalCount / sanitizedLimit),
+		};
+	}
+
+	async listAllOrders(params: ListAllOrdersParams): Promise<ListAllOrdersResult> {
+		const {
+			status,
+			page = 1,
+			limit = 10,
+			sortBy = "created_at",
+			sortOrder = "DESC",
+		} = params;
+
+		const sanitizedLimit = Math.min(Math.max(limit, 1), 100);
+		let query = this.knex.table<OrderRow>(this.tableName);
 
 		if (status) {
 			query = query.where({ status });
